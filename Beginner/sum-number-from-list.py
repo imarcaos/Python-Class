@@ -11,4 +11,9 @@ while(listSize > 0):
 
 # ou simplesmente
 # sumList = sum(x)
+
+# utilizando o for - number = cada número da lista por loop e x a lista acima
+# for number in x:
+#   sumList += number
+
 print("A Soma dos números contidos na lista é -> ", sumList)
