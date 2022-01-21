@@ -1,6 +1,6 @@
 # Calculator BMI (Body Mass Index) ou Calculadore IMC (Índice de Massa Corporal)
 # Peso KG , Altura CM
-#21/01/2022
+# 21/01/2022
 
 print("\n-----------------------------------------------------------------------")
 print("CALCULADORA DE IMC - ÍNDICE DE MASSA CORPORAL")
