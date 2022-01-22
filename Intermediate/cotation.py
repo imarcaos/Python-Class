@@ -19,9 +19,15 @@ def pegar_cotacoes():
 
     print(texto)
 
-pegar_cotacoes()
+#pegar_cotacoes()
 
 janela = Tk() # cria a janela
 janela.title("Cotação Atual das Moedas")
+
+texto_orientacao = Label(janela, text="Clique no Botão para Atualizar as Cotações das Moedas")
+texto_orientacao.grid(column=0, row=0)
+
+botao = Button(janela, text="ATUALIZAR COTAÇÕES", command=pegar_cotacoes)
+botao.grid(column=0, row=1)
 
 janela.mainloop() # mantém a janela aberta e deve estar sempre em último
