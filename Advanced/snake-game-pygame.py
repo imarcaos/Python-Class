@@ -6,6 +6,7 @@
 
 from tkinter import LEFT, RIGHT
 from turtle import down
+from matplotlib import sankey
 import pygame, random
 from pygame.locals import *
 
@@ -65,17 +66,33 @@ while True:
         apple_pos = on_grid_random() # nova posição para a maçã
         snake.append((0, 0)) # adiciona um novo item ao final da lista (+ 1 pedaço da calda)
 
+    
+    # direções da Cobra    
+    if my_direction == UP:
+        # nos if's a seguir verifico se a cobra esta no limite do mapa e redireciono para a outra extremidade
+        if (snake[0][0], snake[0][1]) > (snake[0][0], 0):
+            snake[0] = (snake[0][0], snake[0][1] - 10)
+        else:
+            snake[0] = (snake[0][0], 600)   
+    if my_direction == DOWN:
+        if (snake[0][0], snake[0][1]) < (snake[0][0], 600):
+            snake[0] = (snake[0][0], snake[0][1] + 10)
+        else:
+            snake[0] = (snake[0][0], 0)   
+    if my_direction == RIGHT:
+        if (snake[0][0], snake[0][1]) < (600, snake[0][1]):
+            snake[0] = (snake[0][0] + 10, snake[0][1])
+        else:
+            snake[0] = (0, snake[0][1])
+    if my_direction == LEFT:
+        if (snake[0][0], snake[0][1]) > (0, snake[0][1]):
+            snake[0] = (snake[0][0] - 10, snake[0][1])
+        else:
+            snake[0] = (600, snake[0][1])
+        
+    # organiza a posição ocupada pela cobra e restante do corpo
     for i in range(len(snake) - 1, 0, -1):
         snake[i] = (snake[i-1][0], snake[i-1][1])
-        
-    if my_direction == UP:
-        snake[0] = (snake[0][0], snake[0][1] - 10)    
-    if my_direction == DOWN:
-        snake[0] = (snake[0][0], snake[0][1] + 10)
-    if my_direction == RIGHT:
-        snake[0] = (snake[0][0] + 10, snake[0][1])
-    if my_direction == LEFT:
-        snake[0] = (snake[0][0] - 10, snake[0][1])
 
 
 
@@ -84,6 +101,6 @@ while True:
     screen.blit(apple, apple_pos)
    
     for pos in snake:
-        screen.blit(snake_skin, pos) # para plotar precisamos de uma superfície/splite (usamos tupla), posição
+        screen.blit(snake_skin, pos) # para plotar precisamos de uma superfície (usamos tupla), posição
 
     pygame.display.update()
