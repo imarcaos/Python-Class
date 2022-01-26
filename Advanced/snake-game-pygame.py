@@ -41,7 +41,7 @@ apple.fill((255, 0, 0)) # vermelho
 
 my_direction = LEFT
 
-clock = pygame.time.Clock() # Ajuda a limitar os fps (velocidade)
+clock = pygame.time.Clock() # Ajuda a limitar os fps (velocidade), inserindo no tick abaixo
 
 while True:
     clock.tick(20)
@@ -61,15 +61,24 @@ while True:
             if event.key == K_RIGHT:
                 my_direction = RIGHT
 
-
+    # Testa colisão da Snake com a Maçã
     if collision(snake[0], apple_pos):
         apple_pos = on_grid_random() # nova posição para a maçã
         snake.append((0, 0)) # adiciona um novo item ao final da lista (+ 1 pedaço da calda)
 
     
+    # Testa Colisão da Cabeça da cobra com seu corpo
+    # zona corrigir, lop infinito sem teste, continuar daqui
+    # print(len(snake))
+    ''' 
+    for i in range(1, len(snake) - 1):
+        if snake[0][0] == snake[i][0] and snake[0][1] == snake[i][1]:
+            print("ok")'''
+    # fim zona corrigir
+
     # direções da Cobra    
     if my_direction == UP:
-        # nos if's a seguir verifico se a cobra esta no limite do mapa e redireciono para a outra extremidade
+        # A seguir verifico se a cobra esta no limite do mapa e redireciono para a outra extremidade
         if (snake[0][0], snake[0][1]) > (snake[0][0], 0):
             snake[0] = (snake[0][0], snake[0][1] - 10)
         else:
