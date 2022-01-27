@@ -3,10 +3,6 @@
 # Tuplas - espécie de lista imutável que pode conter listas que por sua vez são mutáveis
 # 25/01/2022
 
-
-from tkinter import LEFT, RIGHT
-from turtle import down
-from matplotlib import sankey
 import pygame, random
 from pygame.locals import *
 
@@ -16,7 +12,7 @@ def on_grid_random():
     y = random.randint(0, 590)
     return (x//10 * 10, y//10 * 10) # Ao fazer esta divisao excluo unidade e deixo as decimais, para ficar alinhado
 
-# Função de colisão
+# Função Teste de colisão
 def collision (c1, c2):
     return (c1[0] == c2[0] and (c1[1] == c2[1]))
 
@@ -34,8 +30,7 @@ snake = [(200, 200), (210, 200), (220, 200)]
 snake_skin = pygame.Surface((10, 10))
 snake_skin.fill((255, 255, 255)) # branco
 
-# apple_pos = (random.randint(0, 590), random.randint(0, 590)) # 590 ultima posição sem sair da tela 600 com cada quadrado de 10
-apple_pos = on_grid_random() # comparando com a linha acima, esta alinha a maçã nas casas em multiplos de 10
+apple_pos = on_grid_random()
 apple = pygame.Surface((10, 10))
 apple.fill((255, 0, 0)) # vermelho
 
@@ -43,12 +38,15 @@ my_direction = LEFT
 
 clock = pygame.time.Clock() # Ajuda a limitar os fps (velocidade), inserindo no tick abaixo
 
+game_over = False
+
 while True:
     clock.tick(20)
 
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
+            exit()
 
         # Evento do Teclado
         if event.type == KEYDOWN:
@@ -68,13 +66,20 @@ while True:
 
     
     # Testa Colisão da Cabeça da cobra com seu corpo
-    # zona corrigir, lop infinito sem teste, continuar daqui
-    # print(len(snake))
-    ''' 
-    for i in range(1, len(snake) - 1):
-        if snake[0][0] == snake[i][0] and snake[0][1] == snake[i][1]:
-            print("ok")'''
-    # fim zona corrigir
+    if snake[0] in snake[1:]:
+        game_over = True            
+        break   
+    #for i in range(1, len(snake) - 1):
+    #    if snake[0][0] == snake[i][0] and snake[0][1] == snake[i][1]:
+    #        game_over = True            
+    #        break
+
+    if game_over:
+        break
+
+    # organiza a posição ocupada pela cobra e restante do corpo
+    for i in range(len(snake) - 1, 0, -1):
+        snake[i] = (snake[i-1][0], snake[i-1][1])
 
     # direções da Cobra    
     if my_direction == UP:
@@ -99,13 +104,7 @@ while True:
         else:
             snake[0] = (600, snake[0][1])
         
-    # organiza a posição ocupada pela cobra e restante do corpo
-    for i in range(len(snake) - 1, 0, -1):
-        snake[i] = (snake[i-1][0], snake[i-1][1])
-
-
-
-
+    
     screen.fill((0, 0, 0)) # antes de plotar, precisamos sempre limpar a tela
     screen.blit(apple, apple_pos)
    
