@@ -1,5 +1,5 @@
 # A lógica deste jogo não foi executada por mim, estou a usar um tutorial apenas para estudar e fixar os diversos comandos
-# O código estará sujo (cheio de comentários) visto ser para meu estudo e eventual pesquisa para relembrar
+# O meu código estará sujo (cheio de comentários) visto ser para meu estudo e eventual pesquisa para relembrar
 # Tuplas - espécie de lista imutável que pode conter listas que por sua vez são mutáveis
 # 25/01/2022
 
