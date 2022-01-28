@@ -36,8 +36,12 @@ apple.fill((255, 0, 0)) # vermelho
 
 my_direction = LEFT
 
-clock = pygame.time.Clock() # Ajuda a limitar os fps (velocidade), inserindo no tick abaixo
+# Ajuda a limitar os fps (velocidade), inserindo no tick abaixo
+clock = pygame.time.Clock()
 
+# Tela Pontuação e Game Over
+font = pygame.font.Font(pygame.font.get_default_font(), 18) # utiliza fonte default do sistema
+score = 0
 game_over = False
 
 while True:
@@ -50,26 +54,27 @@ while True:
 
         # Evento do Teclado
         if event.type == KEYDOWN:
-            if event.key == K_UP:
+            # " my_direction != ..." irá evitar que voltemos no mesmo sentindo, causando o termino do jogo
+            if event.key == K_UP and my_direction != DOWN: 
                 my_direction = UP
-            if event.key == K_DOWN:
+            if event.key == K_DOWN and my_direction != UP:
                 my_direction = DOWN
-            if event.key == K_LEFT:
+            if event.key == K_LEFT and my_direction != RIGHT:
                 my_direction = LEFT
-            if event.key == K_RIGHT:
+            if event.key == K_RIGHT and my_direction != LEFT:
                 my_direction = RIGHT
 
     # Testa colisão da Snake com a Maçã
     if collision(snake[0], apple_pos):
         apple_pos = on_grid_random() # nova posição para a maçã
         snake.append((0, 0)) # adiciona um novo item ao final da lista (+ 1 pedaço da calda)
+        score += 1
 
-    
-    # Testa Colisão da Cabeça da cobra com seu corpo
-    if snake[0] in snake[1:]:
+    # Testa Colisão da Cabeça da cobra com seu corpo , 2 códigos v1 e v2
+    if snake[0] in snake[1:]: # v2
         game_over = True            
         break   
-    #for i in range(1, len(snake) - 1):
+    #for i in range(1, len(snake) - 1): # v1
     #    if snake[0][0] == snake[i][0] and snake[0][1] == snake[i][1]:
     #        game_over = True            
     #        break
@@ -107,6 +112,12 @@ while True:
     
     screen.fill((0, 0, 0)) # antes de plotar, precisamos sempre limpar a tela
     screen.blit(apple, apple_pos)
+
+    # desenha e escreve área do score na tela
+    score_font = font.render('Score: %s' % (score), True, (255, 255, 255))
+    score_rect = score_font.get_rect()
+    score_rect.topleft = (600 - 120, 10)
+    screen.blit(score_font, score_rect)
    
     for pos in snake:
         screen.blit(snake_skin, pos) # para plotar precisamos de uma superfície (usamos tupla), posição
