@@ -1,10 +1,10 @@
 #
-# Bibliotecas: SpeechRecognition , pyttsx3 , PyAudio
+# Bibliotecas - https://pypi.org/ : SpeechRecognition , pyttsx3 , PyAudio, pywhatkit
 # PyAudio no Windows : >>> pip install pipwin  and  >>> pipwin install pyaudio
 # 28/01/2022
 
 import speech_recognition as sr
-import pyttsx3, datetime
+import pyttsx3, datetime, pywhatkit
 
 audio = sr.Recognizer()
 maquina = pyttsx3.init()
@@ -32,5 +32,12 @@ def comando_voz_usuario():
         hora = datetime.datetime.now().strftime('%H:%M')
         maquina.say('Agora são' + hora)
         maquina.runAndWait()
+
+    elif 'toque' in comando:
+        musica = comando.replace('toque', '')
+        resultado = pywhatkit.playonyt(musica)
+        maquina.say('Tocando Música')
+        maquina.runAndWait()
+
 
 comando_voz_usuario()
